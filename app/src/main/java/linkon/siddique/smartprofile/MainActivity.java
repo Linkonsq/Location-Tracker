@@ -33,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private int permissionId = 44;
     FusedLocationProviderClient mFusedLocationClient;
     TextView latTextView, lonTextView, disTextView;
-    double curLatitude, curLongitude;
+    static double curLatitude, curLongitude;
+    String latText, lonText, disText;
     //
     //private AudioManager myAudioManager;
     //
@@ -49,8 +50,9 @@ public class MainActivity extends AppCompatActivity {
         disTextView = findViewById(R.id.disTextView);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLastLocation();
-        getDistance(24.1029, 90.0984, 583838, 0030412);
-
+        getDistance(curLatitude, curLongitude, 23.777176, 90.399452);
+        //Toast.makeText(MainActivity.this, curLatitude+"", Toast.LENGTH_LONG).show();
+        //Toast.makeText(MainActivity.this, curLongitude+"", Toast.LENGTH_LONG).show();
         ///////////////////////////
         /*
         myAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -174,8 +176,12 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onLocationResult(LocationResult locationResult) {
             Location mLastLocation = locationResult.getLastLocation();
-            latTextView.setText(mLastLocation.getLatitude() + "");
-            lonTextView.setText(mLastLocation.getLongitude() + "");
+            latText = String.format("%.6f", mLastLocation.getLatitude());
+            lonText = String.format("%.6f", mLastLocation.getLongitude());
+
+            latTextView.setText(latText);
+            lonTextView.setText(lonText);
+
             curLatitude = Double.parseDouble(latTextView.getText().toString());
             curLongitude = Double.parseDouble(lonTextView.getText().toString());
         }
@@ -212,7 +218,8 @@ public class MainActivity extends AppCompatActivity {
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         double dist = earthRadius * c;
 
-        disTextView.setText(dist + "");
+        disText = String.format("%.6f", dist);
+        disTextView.setText(disText);
 
         //return dist;
     }
