@@ -35,9 +35,8 @@ public class MainActivity extends AppCompatActivity {
     TextView latTextView, lonTextView, disTextView;
     static double curLatitude, curLongitude;
     String latText, lonText, disText;
-    //
-    //private AudioManager myAudioManager;
-    //
+    private AudioManager myAudioManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,14 +48,26 @@ public class MainActivity extends AppCompatActivity {
         lonTextView = findViewById(R.id.lonTextView);
         disTextView = findViewById(R.id.disTextView);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        myAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
         getLastLocation();
-        getDistance(curLatitude, curLongitude, 23.777176, 90.399452);
+
+        //curLatitude = Double.parseDouble(latTextView.getText().toString());
+        //curLongitude = Double.parseDouble(lonTextView.getText().toString());
+
+        if (getDistance(this.curLatitude, this.curLongitude, 23.777176, 90.399452) > 0.01) {
+            myAudioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+            Toast.makeText(MainActivity.this, "Now in normal mode", Toast.LENGTH_SHORT).show();
+        } else {
+            myAudioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+            //myAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+            Toast.makeText(MainActivity.this, "Now in silent mode", Toast.LENGTH_SHORT).show();
+        }
+
         //Toast.makeText(MainActivity.this, curLatitude+"", Toast.LENGTH_LONG).show();
         //Toast.makeText(MainActivity.this, curLongitude+"", Toast.LENGTH_LONG).show();
         ///////////////////////////
         /*
-        myAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-
         Button high = (Button) findViewById(R.id.button5);
         high.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private void getDistance(double lat1, double lon1, double lat2, double lon2) {
+    private double getDistance(double lat1, double lon1, double lat2, double lon2) {
         double earthRadius = 6371; //M = 3958.75 miles, km = 6371, m = 6371e3, cm = 637100000, if < 0.02 km
     /*
         double dLat = Math.toRadians(lat2-lat1);
@@ -221,6 +232,6 @@ public class MainActivity extends AppCompatActivity {
         disText = String.format("%.6f", dist);
         disTextView.setText(disText);
 
-        //return dist;
+        return Double.parseDouble(disText);
     }
 }
