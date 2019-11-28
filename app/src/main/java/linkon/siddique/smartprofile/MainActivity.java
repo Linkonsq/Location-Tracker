@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private int permissionId = 44;
     FusedLocationProviderClient mFusedLocationClient;
     TextView latTextView, lonTextView, disTextView;
-    static double curLatitude, curLongitude;
+    public static double curLatitude, curLongitude;
     String latText, lonText, disText;
     private AudioManager myAudioManager;
 
@@ -54,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
         //curLatitude = Double.parseDouble(latTextView.getText().toString());
         //curLongitude = Double.parseDouble(lonTextView.getText().toString());
-
-        if (getDistance(this.curLatitude, this.curLongitude, 23.777176, 90.399452) > 0.01) {
+/*
+        if (getDistance(curLatitude, curLongitude, 23.777176, 90.399452) > 0.01) {
             myAudioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
             Toast.makeText(MainActivity.this, "Now in normal mode", Toast.LENGTH_SHORT).show();
         } else {
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             //myAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
             Toast.makeText(MainActivity.this, "Now in silent mode", Toast.LENGTH_SHORT).show();
         }
-
+*/
         //Toast.makeText(MainActivity.this, curLatitude+"", Toast.LENGTH_LONG).show();
         //Toast.makeText(MainActivity.this, curLongitude+"", Toast.LENGTH_LONG).show();
         ///////////////////////////
@@ -158,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 );
+
             } else {
                 Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show();
                 Intent intent2 = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
@@ -195,6 +196,15 @@ public class MainActivity extends AppCompatActivity {
 
             curLatitude = Double.parseDouble(latTextView.getText().toString());
             curLongitude = Double.parseDouble(lonTextView.getText().toString());
+
+            if (getDistance(curLatitude, curLongitude, 23.777176, 90.399452) > 0.01) {
+                myAudioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+                Toast.makeText(MainActivity.this, "Now in normal mode", Toast.LENGTH_SHORT).show();
+            }else {
+                myAudioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+                //myAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+                Toast.makeText(MainActivity.this, "Now in silent mode", Toast.LENGTH_SHORT).show();
+            }
         }
     };
 
