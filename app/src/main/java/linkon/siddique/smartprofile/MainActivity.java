@@ -197,13 +197,17 @@ public class MainActivity extends AppCompatActivity {
             curLatitude = Double.parseDouble(latTextView.getText().toString());
             curLongitude = Double.parseDouble(lonTextView.getText().toString());
 
-            if (getDistance(curLatitude, curLongitude, 23.777176, 90.399452) > 0.01) {
+            //23.777176, 90.399452 Dhaka
+            //24.098331, 90.163578 Mosque
+            //24.098300, 90.163607 Mosque
+            //24.096445, 90.144881 Pump
+            if (getDistance(curLatitude, curLongitude, 24.098300, 90.163607) > 0.02) {
                 myAudioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-                Toast.makeText(MainActivity.this, "Now in normal mode", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Now in normal mode", Toast.LENGTH_SHORT).show();
             }else {
                 myAudioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
                 //myAudioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-                Toast.makeText(MainActivity.this, "Now in silent mode", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "Now in silent mode", Toast.LENGTH_SHORT).show();
             }
         }
     };
